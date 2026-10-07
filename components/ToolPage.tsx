@@ -8,6 +8,7 @@ import { getTool } from '@/tools/registry';
 import { uiLoaders } from '@/tools/ui-loaders';
 import type { ToolMeta } from '@/tools/types';
 import { Dropzone } from './Dropzone';
+import { EngineNotice } from './EngineNotice';
 import { FileQueue } from './FileQueue';
 import { Icon } from './Icon';
 import { OptionsForm } from './OptionsForm';
@@ -20,6 +21,7 @@ function FileToolLayout({ meta }: { meta: ToolMeta }) {
 
   return (
     <div className="flex flex-col gap-4">
+      <EngineNotice meta={meta} />
       <Dropzone accept={meta.accept ?? []} multiple={meta.multiple} onFiles={addFiles} />
       <OptionsForm options={meta.options ?? []} values={options} onChange={setOptions} />
       <FileQueue items={items} />
