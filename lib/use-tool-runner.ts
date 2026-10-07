@@ -5,12 +5,9 @@ import { clientLoaders } from '@/tools/client-loaders';
 import type { Options, ToolMeta } from '@/tools/types';
 import { downloadBlob } from './download';
 import { errorMessage, newId, runClientTool, toFiles, type QueueEvent, type QueueItem } from './run-client';
+import { runServerTool } from './run-server';
 import { defaultOptions, validateFiles } from './validate';
 import { zipOutputs } from './zip';
-
-async function* runServerToolPlaceholder(): AsyncGenerator<QueueEvent> {
-  throw new Error('Server tools not available yet');
-}
 
 export function useToolRunner(meta: ToolMeta) {
   const [items, setItems] = useState<QueueItem[]>([]);
@@ -39,7 +36,7 @@ export function useToolRunner(meta: ToolMeta) {
       for (const r of rejected) apply({ id: newId(), label: r.file.name, size: r.file.size, status: 'failed', error: r.reason });
       if (!ok.length) return;
       if (meta.runs === 'server') {
-        await consume(runServerToolPlaceholder());
+        await consume(runServerTool(meta, ok, options));
         return;
       }
       const tool = (await clientLoaders[meta.slug]()).default;
