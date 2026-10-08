@@ -25,7 +25,7 @@ export function killTree(pid: number): void {
 export function runProcess(
   cmd: string,
   args: string[],
-  opts: { cwd?: string; timeoutMs: number; signal?: AbortSignal },
+  opts: { cwd?: string; timeoutMs: number; signal?: AbortSignal; onStdout?: (chunk: string) => void },
 ): Promise<ProcessResult> {
   return new Promise((resolve, reject) => {
     const child = spawn(cmd, args, {
@@ -52,7 +52,10 @@ export function runProcess(
     const timer = setTimeout(onAbort, opts.timeoutMs);
     opts.signal?.addEventListener('abort', onAbort);
 
-    child.stdout.on('data', (d) => (stdout += d));
+    child.stdout.on('data', (d) => {
+      stdout += d;
+      opts.onStdout?.(String(d));
+    });
     child.stderr.on('data', (d) => (stderr += d));
     child.on('error', (err) => finish(() => reject(err)));
     child.on('close', (code) => finish(() => resolve({ stdout, stderr, code: code ?? -1 })));
