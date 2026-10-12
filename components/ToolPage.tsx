@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { useMemo } from 'react';
-import { mdiFolderZipOutline } from '@mdi/js';
+import { mdiFolderZipOutline, mdiPlay } from '@mdi/js';
 import { useToolRunner } from '@/lib/use-tool-runner';
 import { getTool } from '@/tools/registry';
 import { uiLoaders } from '@/tools/ui-loaders';
@@ -12,18 +12,32 @@ import { EngineNotice } from './EngineNotice';
 import { FileQueue } from './FileQueue';
 import { Icon } from './Icon';
 import { OptionsForm } from './OptionsForm';
+import { SortableFileList } from './SortableFileList';
 import { TextToolLayout } from './TextToolLayout';
 import { ToolHeader } from './ToolHeader';
 
 function FileToolLayout({ meta }: { meta: ToolMeta }) {
-  const { items, options, setOptions, addFiles, clear, downloadAll } = useToolRunner(meta);
+  const { items, options, setOptions, addFiles, clear, downloadAll, staged, setStaged, runStaged } = useToolRunner(meta);
   const outputs = items.reduce((n, i) => n + (i.outputs?.length ?? 0), 0);
 
   return (
     <div className="flex flex-col gap-4">
       <EngineNotice meta={meta} />
       <Dropzone accept={meta.accept ?? []} multiple={meta.multiple} onFiles={addFiles} />
+      <SortableFileList files={staged} onChange={setStaged} />
       <OptionsForm options={meta.options ?? []} values={options} onChange={setOptions} />
+      {meta.mode === 'all' && staged.length > 0 && (
+        <div>
+          <button
+            type="button"
+            onClick={runStaged}
+            className="inline-flex items-center gap-1.5 rounded-[10px] bg-text px-4 py-2 text-[13px] font-semibold text-bg"
+          >
+            <Icon path={mdiPlay} size={16} />
+            Combine {staged.length} {staged.length === 1 ? 'file' : 'files'}
+          </button>
+        </div>
+      )}
       <FileQueue items={items} />
       {items.length > 0 && (
         <div className="flex justify-end gap-2">

@@ -32,7 +32,7 @@ export function SearchBox({ value, onChange, count }: { value: string; onChange:
         aria-label="Search tools"
         className="w-full bg-transparent text-[14px] outline-none placeholder:text-muted"
       />
-      <kbd className="hidden rounded border border-border px-1.5 text-[11px] text-muted sm:block">Ctrl K</kbd>
+      <kbd className="hidden whitespace-nowrap rounded border border-border px-1.5 text-[11px] text-muted sm:block">Ctrl K</kbd>
     </label>
   );
 }

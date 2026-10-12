@@ -12,6 +12,7 @@ import { zipOutputs } from './zip';
 export function useToolRunner(meta: ToolMeta) {
   const [items, setItems] = useState<QueueItem[]>([]);
   const [options, setOptions] = useState<Options>(() => defaultOptions(meta));
+  const [staged, setStaged] = useState<File[]>([]);
 
   const apply = useCallback((event: QueueEvent) => {
     setItems((prev) => {
@@ -30,20 +31,38 @@ export function useToolRunner(meta: ToolMeta) {
     [apply],
   );
 
+  const runFiles = useCallback(
+    async (files: File[]) => {
+      if (meta.runs === 'server') {
+        await consume(runServerTool(meta, files, options));
+        return;
+      }
+      const tool = (await clientLoaders[meta.slug]()).default;
+      await consume(runClientTool(meta, tool, files, options));
+    },
+    [meta, options, consume],
+  );
+
   const addFiles = useCallback(
     async (files: File[]) => {
       const { ok, rejected } = validateFiles(files, meta);
       for (const r of rejected) apply({ id: newId(), label: r.file.name, size: r.file.size, status: 'failed', error: r.reason });
       if (!ok.length) return;
-      if (meta.runs === 'server') {
-        await consume(runServerTool(meta, ok, options));
+      // 'all' tools (merge, images → PDF) wait so the person can order the files first.
+      if (meta.mode === 'all') {
+        setStaged((prev) => [...prev, ...ok]);
         return;
       }
-      const tool = (await clientLoaders[meta.slug]()).default;
-      await consume(runClientTool(meta, tool, ok, options));
+      await runFiles(ok);
     },
-    [meta, options, apply, consume],
+    [meta, apply, runFiles],
   );
+
+  const runStaged = useCallback(async () => {
+    const files = staged;
+    setStaged([]);
+    await runFiles(files);
+  }, [staged, runFiles]);
 
   const runText = useCallback(
     async (text: string) => {
@@ -70,5 +89,5 @@ export function useToolRunner(meta: ToolMeta) {
     else if (outputs.length > 1) downloadBlob(await zipOutputs(outputs), `${meta.slug}.zip`);
   }, [items, meta.slug]);
 
-  return { items, options, setOptions, addFiles, runText, clear, downloadAll };
+  return { items, options, setOptions, addFiles, runText, clear, downloadAll, staged, setStaged, runStaged };
 }
