@@ -1,4 +1,5 @@
 import type { ToolMeta } from './types';
+import { meta as compressPdf } from './compress-pdf/meta';
 import { meta as excelToPdf } from './excel-to-pdf/meta';
 import { meta as pdfToWord } from './pdf-to-word/meta';
 import { meta as powerpointToPdf } from './powerpoint-to-pdf/meta';
@@ -11,6 +12,7 @@ export const tools: ToolMeta[] = [
   wordToPdf,
   excelToPdf,
   powerpointToPdf,
+  compressPdf,
 ];
 
 const bySlug = new Map(tools.map((t) => [t.slug, t]));

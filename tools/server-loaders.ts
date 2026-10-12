@@ -5,4 +5,5 @@ export const serverLoaders: Record<string, () => Promise<{ default: ServerTool }
   'word-to-pdf': () => import('./word-to-pdf/server'),
   'excel-to-pdf': () => import('./excel-to-pdf/server'),
   'powerpoint-to-pdf': () => import('./powerpoint-to-pdf/server'),
+  'compress-pdf': () => import('./compress-pdf/server'),
 };
