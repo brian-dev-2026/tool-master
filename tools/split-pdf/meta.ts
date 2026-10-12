@@ -19,7 +19,7 @@ export const meta: ToolMeta = {
         { value: 'every', label: 'Every page' },
         { value: 'ranges', label: 'Ranges' },
       ],
-      default: 'ranges',
+      default: 'every',
     },
     { type: 'text', key: 'ranges', label: 'Pages', default: '', placeholder: '1-3, 5, 8-10' },
   ],
