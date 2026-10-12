@@ -39,6 +39,8 @@ export interface ToolMeta {
   customUi?: boolean;
   /** File tools that also accept pasted text (sent to the tool as a file named "pasted<ext>"). */
   pasteable?: boolean;
+  /** Use the wide page layout (side-by-side editors). */
+  wide?: boolean;
 }
 
 export type Options = Record<string, string | number | boolean>;

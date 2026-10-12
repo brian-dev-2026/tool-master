@@ -4,7 +4,7 @@ import { clientLoaders } from '@/tools/client-loaders';
 import { serverLoaders } from '@/tools/server-loaders';
 import { uiLoaders } from '@/tools/ui-loaders';
 
-export const EXPECTED_COUNT = 19;
+export const EXPECTED_COUNT = 25;
 
 describe('tool registry', () => {
   it('has the v1 count', () => {

@@ -15,4 +15,10 @@ export const clientLoaders: Record<string, () => Promise<{ default: ClientTool }
   'excel-to-json': () => import('./excel-to-json/client'),
   'json-to-csv': () => import('./json-to-csv/client'),
   'json-to-excel': () => import('./json-to-excel/client'),
+  'json-to-typescript': () => import('./json-to-typescript/client'),
+  'json-to-xml': () => import('./json-to-xml/client'),
+  'json-to-yaml': () => import('./json-to-yaml/client'),
+  'markdown-to-html': () => import('./markdown-to-html/client'),
+  'xml-to-json': () => import('./xml-to-json/client'),
+  'yaml-to-json': () => import('./yaml-to-json/client'),
 };

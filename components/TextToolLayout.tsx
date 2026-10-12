@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { mdiDownload, mdiPlay } from '@mdi/js';
+import { mdiDownload, mdiFolderOpenOutline, mdiPlay } from '@mdi/js';
 import { downloadBlob } from '@/lib/download';
 import { useToolRunner } from '@/lib/use-tool-runner';
 import type { ToolMeta, ToolOutput } from '@/tools/types';
@@ -18,6 +18,22 @@ export function TextToolLayout({ meta }: { meta: ToolMeta }) {
 
   return (
     <div className="flex flex-col gap-4">
+      {meta.accept?.length ? (
+        <label className="inline-flex w-fit cursor-pointer items-center gap-1.5 rounded-lg border border-border bg-surface px-2.5 py-1.5 text-[12px] font-semibold hover:bg-icon-tile">
+          <Icon path={mdiFolderOpenOutline} size={15} />
+          Open file
+          <input
+            type="file"
+            hidden
+            accept={meta.accept.join(',')}
+            onChange={async (e) => {
+              const file = e.target.files?.[0];
+              if (file) setInput(await file.text());
+              e.target.value = '';
+            }}
+          />
+        </label>
+      ) : null}
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}

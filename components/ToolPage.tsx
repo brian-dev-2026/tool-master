@@ -89,7 +89,7 @@ export function ToolPage({ slug }: { slug: string }) {
   );
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8">
+    <div className={`mx-auto px-4 py-8 ${meta.wide ? 'max-w-5xl' : 'max-w-2xl'}`}>
       <ToolHeader meta={meta} />
       {Custom ? <Custom meta={meta} /> : meta.input === 'text' ? <TextToolLayout meta={meta} /> : <FileToolLayout meta={meta} />}
     </div>

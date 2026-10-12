@@ -8,6 +8,12 @@ import { meta as jsonToCsv } from './json-to-csv/meta';
 import { meta as jsonToExcel } from './json-to-excel/meta';
 import { meta as excelToPdf } from './excel-to-pdf/meta';
 import { meta as imagesToPdf } from './images-to-pdf/meta';
+import { meta as jsonToTypescript } from './json-to-typescript/meta';
+import { meta as jsonToXml } from './json-to-xml/meta';
+import { meta as jsonToYaml } from './json-to-yaml/meta';
+import { meta as markdownToHtml } from './markdown-to-html/meta';
+import { meta as xmlToJson } from './xml-to-json/meta';
+import { meta as yamlToJson } from './yaml-to-json/meta';
 import { meta as mergePdf } from './merge-pdf/meta';
 import { meta as organizePdf } from './organize-pdf/meta';
 import { meta as pageNumbers } from './page-numbers/meta';
@@ -42,6 +48,12 @@ export const tools: ToolMeta[] = [
   excelToCsv,
   csvToJson,
   jsonToCsv,
+  xmlToJson,
+  jsonToXml,
+  yamlToJson,
+  jsonToYaml,
+  jsonToTypescript,
+  markdownToHtml,
 ];
 
 const bySlug = new Map(tools.map((t) => [t.slug, t]));

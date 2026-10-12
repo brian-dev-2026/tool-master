@@ -56,3 +56,19 @@ body {
   background-clip: text;
   color: transparent;
 }
+
+/* Rendered Markdown preview */
+.prose-tm > * + * { margin-top: 0.75em; }
+.prose-tm h1 { font-size: 1.6em; font-weight: 700; letter-spacing: -0.02em; }
+.prose-tm h2 { font-size: 1.3em; font-weight: 700; }
+.prose-tm h3 { font-size: 1.1em; font-weight: 600; }
+.prose-tm ul { list-style: disc; padding-left: 1.4em; }
+.prose-tm ol { list-style: decimal; padding-left: 1.4em; }
+.prose-tm a { color: var(--accent-from); text-decoration: underline; }
+.prose-tm code { font-family: ui-monospace, monospace; font-size: 0.9em; background: var(--icon-tile); border-radius: 5px; padding: 0.1em 0.3em; }
+.prose-tm pre { background: var(--icon-tile); border-radius: 10px; padding: 0.8em 1em; overflow: auto; }
+.prose-tm pre code { background: none; padding: 0; }
+.prose-tm blockquote { border-left: 3px solid var(--border); padding-left: 1em; color: var(--muted); }
+.prose-tm table { border-collapse: collapse; }
+.prose-tm th, .prose-tm td { border: 1px solid var(--border); padding: 0.35em 0.6em; }
+.prose-tm img { max-width: 100%; }
