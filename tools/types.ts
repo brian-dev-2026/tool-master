@@ -37,6 +37,8 @@ export interface ToolMeta {
   /** Office tools: which MS Office app the 'msoffice' engine means. */
   engineFor?: 'word' | 'excel' | 'powerpoint';
   customUi?: boolean;
+  /** File tools that also accept pasted text (sent to the tool as a file named "pasted<ext>"). */
+  pasteable?: boolean;
 }
 
 export type Options = Record<string, string | number | boolean>;
